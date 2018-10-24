@@ -61,8 +61,8 @@ class reportsPage(Header):
     }
 
     def goToReports(self):
-            self.browser.get("https://pre-artemiy.avanoo.com/report/#/f5e120e5-f/inter")
-            return str(self.browser.current_url) == "https://pre-artemiy.avanoo.com/report/#/f5e120e5-f/inter"
+            self.browser.get("https://pre.avanoo.com/report/#/f5e120e5-f/inter")
+            return str(self.browser.current_url) == "https://pre.avanoo.com/report/#/f5e120e5-f/inter"
             time.sleep(8)
 
     def clickOnGroup(self):
@@ -147,6 +147,7 @@ class reportsPage(Header):
         time.sleep(1)
 
     def getDetailsOfKeyword(self):
+        time.sleep(2)
         mentions = self.getText(self.browser.find_element(*self.Locator_click_buttons['jobMentions']))
         positive = self.getText(self.browser.find_element(*self.Locator_click_buttons['jobPositive']))
         neutral = self.getText(self.browser.find_element(*self.Locator_click_buttons['jobNeutral']))
@@ -211,6 +212,7 @@ class reportsPage(Header):
         assert count == int(temp.arrayKeyword[5])
 
     def verifyMentionsComments(self):
+        time.sleep(1)
         allMentions = self.browser.find_elements(*self.Locator_click_buttons['allSentiments'])
         mentions = int(temp.arrayKeyword[6])
         time.sleep(2)

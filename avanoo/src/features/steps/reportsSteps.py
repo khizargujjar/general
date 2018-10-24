@@ -11,7 +11,7 @@ class avanooSteps():
     def go_to_page(context):
         reportPage = reportsPage(context)
         reportPage.goToReports()
-        time.sleep(10)
+        time.sleep(5)
 
     @step("click on Group dropdown to choose group and categories")
     def step_impl(context):

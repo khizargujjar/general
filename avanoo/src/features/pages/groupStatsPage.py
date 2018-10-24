@@ -31,10 +31,13 @@ class groupStatsPage(Header):
         "endDate": (By.XPATH, '/html/body/div[2]/div/div[2]/div/div[2]/filter-config/div/div/div/div[4]/div[2]/div/div[2]/div[2]/div/ul/li/a'),
         "columnNames": (By.XPATH, '//*[@id="tblTeamStatsData"]/thead/tr/th/span'),
         "editColumn": (By.XPATH, '/html/body/div[2]/div/div[2]/div/div[3]/div[2]/div[1]/div[2]/button'),
-        "firstColumn": (By.XPATH, '//*[@id="teamStatsColumns"]/div/div/div[2]/div[2]/div[1]/table/tbody/tr/td[2]'),
-        "secondColumn": (By.XPATH, '//*[@id="teamStatsColumns"]/div/div/div[2]/div[2]/div[2]/table/tbody/tr/td[2]/span'),
-        "thirdColumn": (By.XPATH, '//*[@id="teamStatsColumns"]/div/div/div[2]/div[2]/div[3]/table/tbody/tr/td[2]/span'),
-        "saveChanges": (By.XPATH, '//*[@id="teamStatsColumns"]/div/div/div[3]/button[2]')
+        "firstColumn": (By.XPATH, '//*[@id="teamStatsColumns"]/div/div/div[2]/div[2]/div/table/tbody/tr/td[2]'),
+        "saveChanges": (By.XPATH, '//*[@id="teamStatsColumns"]/div/div/div[3]/button[2]'),
+        "checkboxes": (By.XPATH, '//*[@id="teamStatsColumns"]/div/div/div[2]/div[2]/div/table/tbody/tr/td[1]/div'),
+        "row": (By.XPATH, '//*[@id="tblTeamStatsData"]/tbody/tr/td/p[1]'),
+        "data": (By.XPATH, '//*[@id="tblTeamStatsData"]/tbody/tr/td'),
+        "corporateRow": (By.XPATH, '//*[@id="tblTeamStatsData"]/tbody/tr[3]/td/p[1]'),
+        "corporateData": (By.XPATH, '//*[@id="tblTeamStatsData"]/tbody/tr[3]/td')
     }
 
     def changeProgramme(self, filter):
@@ -45,7 +48,7 @@ class groupStatsPage(Header):
         for i in range(0, len(programs)):
             if self.getText(programs[i]) == filter:
                 programs[i].click()
-        time.sleep(1)
+        time.sleep(2)
 
     def clickOnGroup(self):
         self.click(self.browser.find_element(*self.Locator_groupStats_buttons['groupAllDropdown']))
@@ -86,34 +89,81 @@ class groupStatsPage(Header):
         columns = (self.browser.find_elements(*self.Locator_groupStats_buttons['columnNames']))
         for i in range(0, len(columns)):
             if self.getText(columns[i]) == column:
-                break
+                assert self.getText(columns[i]) == column
         time.sleep(1)
 
     def editColumn(self):
         self.click(self.browser.find_element(*self.Locator_groupStats_buttons['editColumn']))
 
     def selectGroup(self, group):
+        time.sleep(1)
         groups = self.browser.find_elements(*self.Locator_groupStats_buttons['firstColumn'])
         for i in range(0, len(groups)):
             if self.getText(groups[i]) == group:
                 self.click(groups[i])
-        time.sleep(2)
+        # time.sleep(1)
 
-    def uncheckSecondColumn(self, column):
-        columns = self.browser.find_elements(*self.Locator_groupStats_buttons['secondColumn'])
+    def selectColumn(self, column):
+        columns = self.browser.find_elements(*self.Locator_groupStats_buttons['firstColumn'])
+        checkboxes = self.browser.find_elements(*self.Locator_groupStats_buttons['checkboxes'])
         for i in range(0, len(columns)):
             if self.getText(columns[i]) == column:
-
-                self.click(columns[i])
-        time.sleep(1)
-
-    def uncheckThirdColumn(self, column):
-        columns = self.browser.find_elements(*self.Locator_groupStats_buttons['thirdColumn'])
-        for i in range(0, len(columns)):
-            if self.getText(columns[i]) == column:
-                self.click(columns[i])
+                if self.getAttributes(checkboxes[i], 'class') == "icheckbox_square-blue checked":
+                    self.click(columns[i])
         time.sleep(1)
 
     def saveChanges(self):
         self.click(self.browser.find_element(*self.Locator_groupStats_buttons['saveChanges']))
-        time.sleep(5)
+        time.sleep(1)
+
+    def verifyColumnNotExist(self, column):
+        columns = (self.browser.find_elements(*self.Locator_groupStats_buttons['columnNames']))
+        for i in range(0, len(columns)):
+            if self.getText(columns[i]) != column:
+                continue
+        time.sleep(1)
+
+    def verifyRow(self, row):
+        time.sleep(2)
+        rows = self.browser.find_elements(*self.Locator_groupStats_buttons['row'])
+        for i in range(0, len(rows)):
+            if self.getText(rows[i]) == row:
+                assert self.getText(rows[i]) == row
+
+    def checkData(self, row):
+        array2 = []
+        rows = self.browser.find_elements(*self.Locator_groupStats_buttons['data'])
+        for i in range(0, len(rows)):
+            if self.getText(rows[i]) == row:
+                for j in range(0, 16):
+                    array2.insert(j, self.getText(rows[i + j + 1]))
+                set_arrayData(array2)
+
+        time.sleep(1)
+
+    def verifyData(self, row):
+        array3 = []
+        rows = self.browser.find_elements(*self.Locator_groupStats_buttons['data'])
+        for i in range(0, len(rows)):
+            if self.getText(rows[i]) == row:
+                for j in range(0, 16):
+                    array3.insert(j, self.getText(rows[i + j + 1]))
+                # set_arrayData(array3)
+        assert temp.arrayData != array3
+        time.sleep(1)
+
+    def selectCheckbox(self, engagement, interaction):
+        columns = self.browser.find_elements(*self.Locator_groupStats_buttons['firstColumn'])
+        checkboxes = self.browser.find_elements(*self.Locator_groupStats_buttons['checkboxes'])
+        for i in range(0, len(columns)):
+            if self.getText(columns[i]) == engagement:
+                if self.getAttributes(checkboxes[i], 'class') == "icheckbox_square-blue":
+                    self.click(columns[i])
+                    self.click(columns[i])
+        time.sleep(1)
+        for j in range(0, len(columns)):
+            if self.getText(columns[j]) == interaction:
+                if self.getAttributes(checkboxes[j], 'class') == "icheckbox_square-blue":
+                    self.click(columns[j])
+                    self.click(columns[j])
+        time.sleep(1)

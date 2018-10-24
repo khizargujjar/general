@@ -8,6 +8,7 @@ from array import *
 class temporary():
     def __init__(self):
         self.arrayKeyword = []
+        self.arrayData = []
         self.random = 0
 
 temp = temporary()
@@ -17,3 +18,6 @@ def set_keywordArray(arr2):
 
 def set_random(rand):
     temp.random = rand
+
+def set_arrayData(arr):
+    temp.arrayData = arr

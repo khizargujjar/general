@@ -62,9 +62,6 @@ class SignInPage(Header):
     def inputPassword(self, password):
         self.sendKeys(self.browser.find_element(*self.locator_dictionary['password']), configuration.get_password(password))
 
-    def selectSignInButton(self):
-        self.click(self.browser.find_element(*self.locator_dictionary['LogIn']))
-
     def clickOnJournal(self):
         time.sleep(3)
         self.click(self.browser.find_element(*self.locator_dictionary['journal']))

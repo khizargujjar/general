@@ -9,17 +9,7 @@ class commonSteps():
     @given("user is at login page")
     def step_impl(context):
         signinPage = SignInPage(context)
-        signinPage.assertUrl("https://pre-artemiy.avanoo.com/auth/login#/f5e120e5-f/inter")
-
-    @when("user selects Sign In button")
-    def step_impl(context):
-        signinPage = SignInPage(context)
-        signinPage.selectSignInButton()
-
-    @then("user should be at Sign In page")
-    def step_impl(context):
-        signinPage = SignInPage(context)
-        signinPage.assertUrl("https://app.avanoo.com/auth/login")
+        signinPage.assertUrl("https://pre.avanoo.com/auth/login#/f5e120e5-f/inter")
 
     @when('user sign in with (?P<email>.+) and "(?P<password>.+)"')
     def step_impl(context, email, password):

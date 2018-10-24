@@ -32,7 +32,7 @@ def before_all(context):
     browsertype = configuration.get_browser()
     context.browser = driver.switch_browser(browsertype)
     context.browser.maximize_window()
-    context.browser.get("https://pre-artemiy.avanoo.com/auth/login#/f5e120e5-f/inter")
+    context.browser.get("https://pre.avanoo.com/auth/login#/f5e120e5-f/inter")
 
 def after_all(context):
     basepage = basePage(context)
