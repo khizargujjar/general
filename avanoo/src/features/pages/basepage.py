@@ -1,11 +1,16 @@
 from selenium.common.exceptions import *
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import os
 import time
 
 class basePage:
+
+    locator_dictionary_button = {
+        "loader": (By.XPATH, '/html/body/div[2]/div/div[2]/div/div[1]')
+    }
 
     def __init__(self, context):
         self.browser = context.browser
@@ -67,3 +72,13 @@ class basePage:
         fileList = os.listdir(downloadfolder)
         for fileName in fileList:
             os.remove(downloadfolder + "\\" + fileName)
+
+    # def wait_till_loading(self):
+    #     loading = self.browser.find_element(*self.locator_dictionary_button['loader'])
+    #     try:
+    #         if self.getAttributes(loading, 'class') == "zero-state loading":
+    #             return
+    #     # except:
+    #
+
+

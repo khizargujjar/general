@@ -1,4 +1,4 @@
-# browser-test
+# automations
 
 Steps to run the project:
 

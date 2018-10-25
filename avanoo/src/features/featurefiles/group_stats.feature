@@ -53,9 +53,10 @@ Feature:check group stats
     And user uncheck the "Thanks" from pop up
     Then user click on save changes button
     And verify that "LEARNERS" column does not exist
-    And verify that "PARTICIPATION %" column does not exist
+    And verify that "PARTICIPATION" column does not exist
     And verify that "VIDEOS WATCHED" column does not exist
     And verify that "COMPLETION" column does not exist
     And verify that "THANKS" column does not exist
     Then user click on edit columns button
     Then user check the "ENGAGEMENT" and "INTERACTIONS" checkbox
+    Then user click on save changes button
